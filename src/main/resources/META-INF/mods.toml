@@ -1,0 +1,20 @@
+modLoader="javafml"
+loaderVersion="[40,)"
+issueTrackerURL="https://github.com/Mrbysco/Ignition/issues"
+license="MIT"
+
+[[mods]]
+modId="ignition"
+version="${file.jarVersion}"
+displayName="Ignition"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/ignition"
+authors="Mrbysco"
+description='''
+Wait... You're telling me I can't just place a torch in my wooden house without the walls catching on fire?
+'''
+[[dependencies.ignition]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.18,1.19)"
+ordering="NONE"
+side="BOTH"
