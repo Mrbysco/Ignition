@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class FlammabilityUtil {
 	public static boolean hasFlammableNeighbours(LevelReader reader, BlockPos pos) {
-		for(Direction direction : Direction.values()) {
+		for (Direction direction : Direction.values()) {
 			if (isFlammable(reader, pos.relative(direction), direction.getOpposite())) {
 				return true;
 			}
