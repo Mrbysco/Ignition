@@ -20,12 +20,12 @@ public class CampfireBlockEntityMixin {
 	@Inject(method = "cookTick(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/entity/CampfireBlockEntity;)V",
 			at = @At(value = "HEAD"))
 	private static void ignitionCampfireTick(Level level, BlockPos pos, BlockState state, CampfireBlockEntity blockEntity, CallbackInfo ci) {
-		if(IgnitionConfig.COMMON.enableCampfire.get() && state.is(Blocks.CAMPFIRE)) {
-			if(level.getGameTime() % getIgnitionCampfireTickDelay(level.random, IgnitionConfig.COMMON.campfireTickDelay::get) == 0) {
+		if (IgnitionConfig.COMMON.enableCampfire.get() && state.is(Blocks.CAMPFIRE)) {
+			if (level.getGameTime() % getIgnitionCampfireTickDelay(level.random, IgnitionConfig.COMMON.campfireTickDelay::get) == 0) {
 				FlammabilityUtil.onFireTick(state, level, pos, level.random, Blocks.FIRE.defaultBlockState());
 			}
-		} else if(IgnitionConfig.COMMON.enableSoulCampfire.get() && state.is(Blocks.SOUL_CAMPFIRE)) {
-			if(level.getGameTime() % getIgnitionCampfireTickDelay(level.random, IgnitionConfig.COMMON.soulCampfireTickDelay::get) == 0) {
+		} else if (IgnitionConfig.COMMON.enableSoulCampfire.get() && state.is(Blocks.SOUL_CAMPFIRE)) {
+			if (level.getGameTime() % getIgnitionCampfireTickDelay(level.random, IgnitionConfig.COMMON.soulCampfireTickDelay::get) == 0) {
 				FlammabilityUtil.onFireTick(state, level, pos, level.random, Blocks.SOUL_FIRE.defaultBlockState());
 			}
 		}

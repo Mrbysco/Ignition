@@ -24,25 +24,25 @@ public class IgnitionRegistry {
 			.noCollission().instabreak().lightLevel((state) -> {
 				return 14;
 			}).sound(SoundType.WOOD), ParticleTypes.FLAME, () -> Blocks.FIRE, IgnitionConfig.COMMON.enableTorch::get,
-				IgnitionConfig.COMMON.randomTicking::get, IgnitionConfig.COMMON.torchTickDelay::get));
+			IgnitionConfig.COMMON.randomTicking::get, IgnitionConfig.COMMON.torchTickDelay::get));
 
 	public static final RegistryObject<Block> WALL_TORCH = BLOCKS.register("wall_torch", () -> new CustomWallTorchBlock(BlockBehaviour.Properties.of(Material.DECORATION)
 			.noCollission().instabreak().lightLevel((state) -> {
 				return 14;
 			}).sound(SoundType.WOOD).dropsLike(TORCH.get()), ParticleTypes.FLAME, () -> Blocks.FIRE, IgnitionConfig.COMMON.enableTorch::get,
-				IgnitionConfig.COMMON.randomTicking::get, IgnitionConfig.COMMON.torchTickDelay::get));
+			IgnitionConfig.COMMON.randomTicking::get, IgnitionConfig.COMMON.torchTickDelay::get));
 
 	public static final RegistryObject<Block> SOUL_TORCH = BLOCKS.register("soul_torch", () -> new CustomTorchBlock(BlockBehaviour.Properties.of(Material.DECORATION)
 			.noCollission().instabreak().lightLevel((state) -> {
 				return 10;
 			}).sound(SoundType.WOOD), ParticleTypes.SOUL_FIRE_FLAME, () -> Blocks.SOUL_FIRE, IgnitionConfig.COMMON.enableSoulTorch::get,
-				IgnitionConfig.COMMON.randomSoulTicking::get, IgnitionConfig.COMMON.soulTorchTickDelay::get));
+			IgnitionConfig.COMMON.randomSoulTicking::get, IgnitionConfig.COMMON.soulTorchTickDelay::get));
 
 	public static final RegistryObject<Block> WALL_SOUL_TORCH = BLOCKS.register("wall_soul_torch", () -> new CustomWallTorchBlock(BlockBehaviour.Properties.of(Material.DECORATION)
 			.noCollission().instabreak().lightLevel((state) -> {
 				return 10;
 			}).sound(SoundType.WOOD).dropsLike(SOUL_TORCH.get()), ParticleTypes.SOUL_FIRE_FLAME, () -> Blocks.SOUL_FIRE, IgnitionConfig.COMMON.enableSoulTorch::get,
-				IgnitionConfig.COMMON.randomSoulTicking::get, IgnitionConfig.COMMON.soulTorchTickDelay::get));
+			IgnitionConfig.COMMON.randomSoulTicking::get, IgnitionConfig.COMMON.soulTorchTickDelay::get));
 
 	public static final RegistryObject<Item> TORCH_ITEM = ITEMS.register("torch", () -> new StandingAndWallBlockItem(TORCH.get(), WALL_TORCH.get(),
 			(new Item.Properties()).tab(CreativeModeTab.TAB_DECORATIONS)));

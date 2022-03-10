@@ -18,6 +18,7 @@ public class CustomWallTorchBlock extends WallTorchBlock implements Inferno {
 	private final BooleanSupplier enableFire;
 	private final BooleanSupplier randomTicking;
 	private final IntSupplier tickDelay;
+
 	public CustomWallTorchBlock(Properties properties, ParticleOptions particleOptions, Supplier<Block> fireBlockSupplier,
 								BooleanSupplier enableFire, BooleanSupplier randomTicking, IntSupplier tickDelay) {
 		super(properties, particleOptions);
@@ -54,7 +55,7 @@ public class CustomWallTorchBlock extends WallTorchBlock implements Inferno {
 
 	@Override
 	public void tick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
-		if(enableFire(state)) {
+		if (enableFire(state)) {
 			scheduleFireTick(level, pos, state);
 			fireTick(state, level, pos, random);
 		}
@@ -63,7 +64,7 @@ public class CustomWallTorchBlock extends WallTorchBlock implements Inferno {
 	@Override
 	public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
 		super.onPlace(state, level, pos, oldState, isMoving);
-		if(enableFire(state)) {
+		if (enableFire(state)) {
 			scheduleFireTick(level, pos, state);
 		}
 	}
