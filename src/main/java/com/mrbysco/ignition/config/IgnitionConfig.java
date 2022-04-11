@@ -21,6 +21,10 @@ public class IgnitionConfig {
 		public final BooleanValue enableSoulCampfire;
 		public final IntValue soulCampfireTickDelay;
 
+		public final BooleanValue enableCandles;
+		public final IntValue candleTickDelay;
+		public final BooleanValue randomCandleTicking;
+
 		Common(ForgeConfigSpec.Builder builder) {
 			builder.comment("General settings")
 					.push("General");
@@ -64,6 +68,18 @@ public class IgnitionConfig {
 			soulCampfireTickDelay = builder
 					.comment("The delay between soul campfire ticks [Default: 60]")
 					.defineInRange("soulCampfireTickDelay", 60, 1, Integer.MAX_VALUE);
+
+			enableCandles = builder
+					.comment("Enable Candles setting flammable blocks on fire [Default: true]")
+					.define("enableCandles", true);
+
+			candleTickDelay = builder
+					.comment("The delay between candle ticks [Default: 60]")
+					.defineInRange("candleTickDelay", 60, 1, Integer.MAX_VALUE);
+
+			randomCandleTicking = builder
+					.comment("Make the candle ticking completely random [Default: false]")
+					.define("randomCandleTicking", false);
 
 			builder.pop();
 		}
