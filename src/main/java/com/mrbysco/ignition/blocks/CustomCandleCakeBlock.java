@@ -4,14 +4,13 @@ import com.mrbysco.ignition.config.IgnitionConfig;
 import com.mrbysco.ignition.util.FlammabilityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CandleCakeBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-
-import java.util.Random;
 
 public class CustomCandleCakeBlock extends CandleCakeBlock implements Inferno {
 
@@ -35,7 +34,7 @@ public class CustomCandleCakeBlock extends CandleCakeBlock implements Inferno {
 	}
 
 	@Override
-	public int getFireTickDelay(Random rand) {
+	public int getFireTickDelay(RandomSource rand) {
 		return IgnitionConfig.COMMON.candleTickDelay.get() + rand.nextInt(10);
 	}
 
@@ -45,7 +44,7 @@ public class CustomCandleCakeBlock extends CandleCakeBlock implements Inferno {
 	}
 
 	@Override
-	public void tick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
+	public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 		if (enableFire(state)) {
 			scheduleFireTick(level, pos, state);
 			fireTick(state, level, pos, random);
@@ -53,7 +52,7 @@ public class CustomCandleCakeBlock extends CandleCakeBlock implements Inferno {
 	}
 
 	@Override
-	public void fireTick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
+	public void fireTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 		if (state.getValue(LIT)) {
 			FlammabilityUtil.onFireTick(state, level, pos, random, getFireState());
 		}

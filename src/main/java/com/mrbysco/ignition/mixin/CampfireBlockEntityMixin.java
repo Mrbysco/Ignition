@@ -3,6 +3,7 @@ package com.mrbysco.ignition.mixin;
 import com.mrbysco.ignition.config.IgnitionConfig;
 import com.mrbysco.ignition.util.FlammabilityUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.CampfireBlockEntity;
@@ -12,7 +13,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Random;
 import java.util.function.IntSupplier;
 
 @Mixin(CampfireBlockEntity.class)
@@ -31,7 +31,7 @@ public class CampfireBlockEntityMixin {
 		}
 	}
 
-	private static int getIgnitionCampfireTickDelay(Random rand, IntSupplier tickDelay) {
+	private static int getIgnitionCampfireTickDelay(RandomSource rand, IntSupplier tickDelay) {
 		return tickDelay.getAsInt() + rand.nextInt(10);
 	}
 }

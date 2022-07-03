@@ -2,12 +2,11 @@ package com.mrbysco.ignition.util;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
-
-import java.util.Random;
 
 public class FlammabilityUtil {
 	public static boolean hasFlammableNeighbours(LevelReader reader, BlockPos pos) {
@@ -25,7 +24,7 @@ public class FlammabilityUtil {
 				level.hasChunkAt(pos)) && level.getBlockState(pos).isFlammable(level, pos, face);
 	}
 
-	public static void onFireTick(BlockState state, Level level, BlockPos pos, Random random, BlockState fireState) {
+	public static void onFireTick(BlockState state, Level level, BlockPos pos, RandomSource random, BlockState fireState) {
 		if (level.getGameRules().getBoolean(GameRules.RULE_DOFIRETICK)) {
 			int i = random.nextInt(3);
 			if (i > 0) {

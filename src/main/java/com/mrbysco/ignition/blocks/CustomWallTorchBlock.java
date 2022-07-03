@@ -3,12 +3,12 @@ package com.mrbysco.ignition.blocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.WallTorchBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.Random;
 import java.util.function.BooleanSupplier;
 import java.util.function.IntSupplier;
 import java.util.function.Supplier;
@@ -44,7 +44,7 @@ public class CustomWallTorchBlock extends WallTorchBlock implements Inferno {
 	}
 
 	@Override
-	public int getFireTickDelay(Random rand) {
+	public int getFireTickDelay(RandomSource rand) {
 		return tickDelay.getAsInt() + rand.nextInt(10);
 	}
 
@@ -54,7 +54,7 @@ public class CustomWallTorchBlock extends WallTorchBlock implements Inferno {
 	}
 
 	@Override
-	public void tick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
+	public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 		if (enableFire(state)) {
 			scheduleFireTick(level, pos, state);
 			fireTick(state, level, pos, random);

@@ -4,21 +4,20 @@ import com.mrbysco.ignition.config.IgnitionConfig;
 import com.mrbysco.ignition.util.FlammabilityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-
-import java.util.Random;
 
 public interface Inferno {
 	boolean enableFire(BlockState state);
 
-	int getFireTickDelay(Random random);
+	int getFireTickDelay(RandomSource random);
 
 	boolean randomlyTicksFire(BlockState state);
 
 	BlockState getFireState();
 
-	default void fireTick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
+	default void fireTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 		FlammabilityUtil.onFireTick(state, level, pos, random, getFireState());
 	}
 
