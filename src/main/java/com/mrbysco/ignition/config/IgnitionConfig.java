@@ -42,7 +42,7 @@ public class IgnitionConfig {
 					.define("randomTicking", false);
 
 			enableSoulTorch = builder
-					.comment("Enable Torches setting flammable blocks on fire [Default: true]")
+					.comment("Enable Soul Torches setting flammable blocks on fire [Default: true]")
 					.define("enableSoulTorch", true);
 
 			soulTorchTickDelay = builder
