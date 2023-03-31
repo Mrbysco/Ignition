@@ -37,7 +37,7 @@ public class FlammabilityUtil {
 					}
 
 					BlockState blockstate = level.getBlockState(blockpos);
-					if (blockstate.isAir()) {
+					if (blockstate.isAir() && fireState.canSurvive(level, blockpos)) {
 						if (FlammabilityUtil.hasFlammableNeighbours(level, blockpos)) {
 							level.setBlockAndUpdate(blockpos, fireState);
 							return;
@@ -53,7 +53,7 @@ public class FlammabilityUtil {
 						return;
 					}
 
-					if (level.isEmptyBlock(offsetPos.above()) && FlammabilityUtil.isFlammable(level, offsetPos, Direction.UP)) {
+					if (level.isEmptyBlock(offsetPos.above()) && FlammabilityUtil.isFlammable(level, offsetPos, Direction.UP) && fireState.canSurvive(level, offsetPos)) {
 						level.setBlockAndUpdate(offsetPos.above(), fireState);
 					}
 				}
