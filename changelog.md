@@ -1,0 +1,1 @@
+* Check if the fire can survive at the position it tries to place it (Should fix soul fire)
