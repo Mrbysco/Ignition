@@ -42,7 +42,7 @@ public class FlammabilityUtil {
 							level.setBlockAndUpdate(blockpos, fireState);
 							return;
 						}
-					} else if (blockstate.getMaterial().blocksMotion()) {
+					} else if (blockstate.blocksMotion()) {
 						return;
 					}
 				}

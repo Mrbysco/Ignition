@@ -1,21 +1,27 @@
 plugins {
+    id 'idea'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '5.+'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id 'org.spongepowered.mixin'
     id 'com.matthewprenger.cursegradle' version '1.4.0'
     id 'com.modrinth.minotaur' version "2.+"
 }
 
 version = "${version}"
-group = 'com.mrbysco.ignition' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "Ignition-${mc_version}"
+group = "${mod_group}"
+base {
+    archivesName = "Ignition-${mc_version}"
+}
 
 // Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-    mappings channel: "${mcp_channel}", version: "${mcp_mappings}"
+    mappings channel: "${mapping_channel}", version: "${mapping_version}"
+
+    copyIdeResources = true
+
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -24,21 +30,22 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
-            arg '--mixin.config=ignition.mixins.json'
+            arg "--mixin.config=${mod_id}.mixins.json"
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             // Recommended logging data for a userdev environment
             // property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.markers', 'REGISTRIES'
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property 'forge.enabledGameTestNamespaces', 'ignition'
+            property 'forge.enabledGameTestNamespaces', "${mod_id}"
 
             mods {
-                ignition {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -46,21 +53,22 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
-            arg '--mixin.config=ignition.mixins.json'
+            arg "--mixin.config=${mod_id}.mixins.json"
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             // Recommended logging data for a userdev environment
             // property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.markers', 'REGISTRIES'
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property 'forge.enabledGameTestNamespaces', 'ignition'
+            property 'forge.enabledGameTestNamespaces', "${mod_id}"
 
             mods {
-                ignition {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -68,24 +76,22 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
-            arg '--mixin.config=ignition.mixins.json'
+            arg "--mixin.config=${mod_id}.mixins.json"
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             // Recommended logging data for a userdev environment
             // property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.markers', 'REGISTRIES'
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'ignition', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-
-            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property 'forge.enabledGameTestNamespaces', 'ignition'
+            args '--mod', "${mod_id}", '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
-                ignition {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -97,15 +103,12 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 mixin {
-    add sourceSets.main, 'ignition.refmap.json'
+    add sourceSets.main, "${mod_id}.refmap.json"
 }
 
 repositories {
     maven {
         url = "https://maven.blamejared.com"
-        content {
-            includeGroup "mezz.jei"
-        }
     }
 }
 
@@ -123,14 +126,14 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "ignition",
+                "Specification-Title"     : "${mod_id}",
                 "Specification-Vendor"    : "Mrbysco",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "Mrbysco",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs"            : "ignition.mixins.json"
+                "MixinConfigs"            : "${mod_id}.mixins.json"
         ])
     }
 }
@@ -153,7 +156,7 @@ publishing {
     repositories {
         if (System.getenv().SAP_SECRET) {
             maven {
-                url "https://maven.saps.dev/minecraft"
+                url "https://maven.saps.dev/releases"
                 credentials {
                     username = "mrbysco"
                     password = "${System.getenv().SAP_SECRET}"
