@@ -6,9 +6,13 @@
   "refmap": "ignition.refmap.json",
   "target": "@env(DEFAULT)",
   "mixins": [
-	"CampfireBlockEntityMixin"
+    "CampfireBlockEntityMixin",
+    "CandleBlockMixin",
+    "CandleCakeBlockMixin",
+    "TorchBlockMixin",
+    "WallTorchBlockMixin"
   ],
   "injectors": {
-	"defaultRequire": 1
+    "defaultRequire": 1
   }
 }

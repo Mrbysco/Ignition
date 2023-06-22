@@ -9,21 +9,21 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 public interface Inferno {
-	boolean enableFire(BlockState state);
+	boolean ignitionEnableFire(BlockState state);
 
-	int getFireTickDelay(RandomSource random);
+	int ignitionGetFireTickDelay(BlockState state, RandomSource random);
 
-	boolean randomlyTicksFire(BlockState state);
+	boolean ignitionRandomlyTicksFire(BlockState state);
 
-	BlockState getFireState();
+	BlockState ignitionGetFireState(BlockState state);
 
-	default void fireTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-		FlammabilityUtil.onFireTick(state, level, pos, random, getFireState());
+	default void ignitionFireTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+		FlammabilityUtil.onFireTick(state, level, pos, random, ignitionGetFireState(state));
 	}
 
-	default void scheduleFireTick(Level level, BlockPos pos, BlockState state) {
+	default void ignitionScheduleFireTick(Level level, BlockPos pos, BlockState state) {
 		if (!IgnitionConfig.COMMON.randomTicking.get()) {
-			level.scheduleTick(pos, state.getBlock(), getFireTickDelay(level.random));
+			level.scheduleTick(pos, state.getBlock(), ignitionGetFireTickDelay(state, level.random));
 		}
 	}
 }

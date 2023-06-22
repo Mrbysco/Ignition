@@ -1,8 +1,11 @@
 package com.mrbysco.ignition.config;
 
+import com.mrbysco.ignition.Ignition;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class IgnitionConfig {
@@ -92,5 +95,15 @@ public class IgnitionConfig {
 		final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
 		commonSpec = specPair.getRight();
 		COMMON = specPair.getLeft();
+	}
+
+	@SubscribeEvent
+	public static void onLoad(final ModConfigEvent.Loading configEvent) {
+		Ignition.LOGGER.debug("Loaded Ignition's config file {}", configEvent.getConfig().getFileName());
+	}
+
+	@SubscribeEvent
+	public static void onFileChange(final ModConfigEvent.Reloading configEvent) {
+		Ignition.LOGGER.warn("Ignition's config just got changed on the file system!");
 	}
 }
