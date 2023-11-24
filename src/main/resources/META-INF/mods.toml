@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[46,)"
+loaderVersion="[1,)"
 issueTrackerURL="https://github.com/Mrbysco/Ignition/issues"
 license="MIT"
 
@@ -15,6 +15,8 @@ Wait... You're telling me I can't just place a torch in my wooden house without 
 [[dependencies.ignition]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.20,1.21)"
+versionRange="[1.20.2,1.21)"
 ordering="NONE"
 side="BOTH"
+[[mixins]]
+config = "ignition.mixins.json"

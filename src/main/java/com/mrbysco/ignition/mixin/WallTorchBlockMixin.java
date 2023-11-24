@@ -20,33 +20,33 @@ public class WallTorchBlockMixin extends Block implements Inferno {
 	}
 
 	@Override
-	public boolean ignitionEnableFire(BlockState state) {
-		if (state.is(Blocks.SOUL_TORCH))
+	public boolean ignition$enableFire(BlockState state) {
+		if (state.is(Blocks.SOUL_WALL_TORCH))
 			return IgnitionConfig.COMMON.enableSoulTorch.get();
 		else
 			return IgnitionConfig.COMMON.enableTorch.get();
 	}
 
 	@Override
-	public boolean ignitionRandomlyTicksFire(BlockState state) {
-		if (state.is(Blocks.SOUL_TORCH))
+	public boolean ignition$randomlyTicksFire(BlockState state) {
+		if (state.is(Blocks.SOUL_WALL_TORCH))
 			return IgnitionConfig.COMMON.randomSoulTicking.get();
 		else
 			return IgnitionConfig.COMMON.randomTicking.get();
 	}
 
 	@Override
-	public BlockState ignitionGetFireState(BlockState state) {
-		if (state.is(Blocks.SOUL_TORCH))
+	public BlockState ignition$getFireState(BlockState state) {
+		if (state.is(Blocks.SOUL_WALL_TORCH))
 			return Blocks.SOUL_FIRE.defaultBlockState();
 		else
 			return Blocks.FIRE.defaultBlockState();
 	}
 
 	@Override
-	public int ignitionGetFireTickDelay(BlockState state, RandomSource rand) {
+	public int ignition$getFireTickDelay(BlockState state, RandomSource rand) {
 		int tickDelay;
-		if (state.is(Blocks.SOUL_TORCH))
+		if (state.is(Blocks.SOUL_WALL_TORCH))
 			tickDelay = IgnitionConfig.COMMON.soulCampfireTickDelay.get();
 		else
 			tickDelay = IgnitionConfig.COMMON.torchTickDelay.get();
@@ -54,23 +54,21 @@ public class WallTorchBlockMixin extends Block implements Inferno {
 	}
 
 	@Override
-	public boolean isRandomlyTicking(BlockState state) {
-		return (ignitionEnableFire(state) && ignitionRandomlyTicksFire(state)) || super.isRandomlyTicking(state);
-	}
-
-	@Override
 	public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-		if (ignitionEnableFire(state)) {
-			ignitionScheduleFireTick(level, pos, state);
-			ignitionFireTick(state, level, pos, random);
+		if (ignition$enableFire(state)) {
+			ignition$scheduleFireTick(level, pos, state);
+			ignition$fireTick(state, level, pos, random);
 		}
 	}
 
 	@Override
 	public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
 		super.onPlace(state, level, pos, oldState, isMoving);
-		if (ignitionEnableFire(state)) {
-			ignitionScheduleFireTick(level, pos, state);
+		if (ignition$enableFire(state)) {
+			if (!this.isRandomlyTicking && ignition$randomlyTicksFire(state)) {
+				((BlockBehaviorAccessor) state.getBlock()).setIsRandomlyTicking(true);
+			}
+			ignition$scheduleFireTick(level, pos, state);
 		}
 	}
 }

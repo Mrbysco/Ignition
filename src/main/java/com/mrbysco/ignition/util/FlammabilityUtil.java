@@ -19,9 +19,9 @@ public class FlammabilityUtil {
 		return false;
 	}
 
-	public static boolean isFlammable(LevelReader level, BlockPos pos, Direction face) {
-		return (pos.getY() < level.getMinBuildHeight() || pos.getY() >= level.getMaxBuildHeight() ||
-				level.hasChunkAt(pos)) && level.getBlockState(pos).isFlammable(level, pos, face);
+	public static boolean isFlammable(LevelReader reader, BlockPos pos, Direction face) {
+		return (pos.getY() < reader.getMinBuildHeight() || pos.getY() >= reader.getMaxBuildHeight() ||
+				reader.hasChunkAt(pos)) && reader.getBlockState(pos).isFlammable(reader, pos, face);
 	}
 
 	public static void onFireTick(BlockState state, Level level, BlockPos pos, RandomSource random, BlockState fireState) {

@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.CampfireBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -21,17 +22,18 @@ public class CampfireBlockEntityMixin {
 			at = @At(value = "HEAD"))
 	private static void ignitionCampfireTick(Level level, BlockPos pos, BlockState state, CampfireBlockEntity blockEntity, CallbackInfo ci) {
 		if (IgnitionConfig.COMMON.enableCampfire.get() && state.is(Blocks.CAMPFIRE)) {
-			if (level.getGameTime() % getIgnitionCampfireTickDelay(level.random, IgnitionConfig.COMMON.campfireTickDelay::get) == 0) {
+			if (level.getGameTime() % ignition$getCampfireTickDelay(level.random, IgnitionConfig.COMMON.campfireTickDelay::get) == 0) {
 				FlammabilityUtil.onFireTick(state, level, pos, level.random, Blocks.FIRE.defaultBlockState());
 			}
 		} else if (IgnitionConfig.COMMON.enableSoulCampfire.get() && state.is(Blocks.SOUL_CAMPFIRE)) {
-			if (level.getGameTime() % getIgnitionCampfireTickDelay(level.random, IgnitionConfig.COMMON.soulCampfireTickDelay::get) == 0) {
+			if (level.getGameTime() % ignition$getCampfireTickDelay(level.random, IgnitionConfig.COMMON.soulCampfireTickDelay::get) == 0) {
 				FlammabilityUtil.onFireTick(state, level, pos, level.random, Blocks.SOUL_FIRE.defaultBlockState());
 			}
 		}
 	}
 
-	private static int getIgnitionCampfireTickDelay(RandomSource rand, IntSupplier tickDelay) {
+	@Unique
+	private static int ignition$getCampfireTickDelay(RandomSource rand, IntSupplier tickDelay) {
 		return tickDelay.getAsInt() + rand.nextInt(10);
 	}
 }

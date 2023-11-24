@@ -27,50 +27,48 @@ public class CandleBlockMixin extends Block implements Inferno {
 	}
 
 	@Override
-	public boolean ignitionEnableFire(BlockState state) {
+	public boolean ignition$enableFire(BlockState state) {
 		return IgnitionConfig.COMMON.enableCandles.get();
 	}
 
 	@Override
-	public boolean ignitionRandomlyTicksFire(BlockState state) {
+	public boolean ignition$randomlyTicksFire(BlockState state) {
 		return IgnitionConfig.COMMON.randomCandleTicking.get();
 	}
 
 	@Override
-	public BlockState ignitionGetFireState(BlockState state) {
+	public BlockState ignition$getFireState(BlockState state) {
 		return Blocks.FIRE.defaultBlockState();
 	}
 
 	@Override
-	public int ignitionGetFireTickDelay(BlockState state, RandomSource rand) {
+	public int ignition$getFireTickDelay(BlockState state, RandomSource rand) {
 		return IgnitionConfig.COMMON.candleTickDelay.get() + rand.nextInt(10);
 	}
 
 	@Override
-	public boolean isRandomlyTicking(BlockState state) {
-		return (ignitionEnableFire(state) && ignitionRandomlyTicksFire(state)) || super.isRandomlyTicking(state);
-	}
-
-	@Override
 	public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-		if (ignitionEnableFire(state)) {
-			ignitionScheduleFireTick(level, pos, state);
-			ignitionFireTick(state, level, pos, random);
+		if (ignition$enableFire(state)) {
+			ignition$scheduleFireTick(level, pos, state);
+			this.ignition$fireTick(state, level, pos, random);
 		}
 	}
 
 	@Override
-	public void ignitionFireTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+	public void ignition$fireTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 		if (state.getValue(LIT)) {
-			FlammabilityUtil.onFireTick(state, level, pos, random, ignitionGetFireState(state));
+			FlammabilityUtil.onFireTick(state, level, pos, random, ignition$getFireState(state));
 		}
 	}
 
 	@Override
 	public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
 		super.onPlace(state, level, pos, oldState, isMoving);
-		if (ignitionEnableFire(state)) {
-			ignitionScheduleFireTick(level, pos, state);
+		if (ignition$enableFire(state)) {
+			if (!this.isRandomlyTicking && ignition$randomlyTicksFire(state)) {
+				((BlockBehaviorAccessor) state.getBlock()).setIsRandomlyTicking(true);
+			}
+			ignition$scheduleFireTick(level, pos, state);
 		}
 	}
 }
