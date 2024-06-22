@@ -96,7 +96,6 @@ jar {
     }
 }
 
-
 publishing {
     publications {
         register('mavenJava', MavenPublication) {
@@ -133,8 +132,8 @@ if (System.getenv().CURSEFORGE_KEY) {
         mainFile.changelog = file("$project.rootDir/changelog.md")
         mainFile.changelogType = 'markdown'
 
-//        mainFile.addRequirement(
-//        mainFile.addOptional())
+//        mainFile.addRequirement()
+//        mainFile.addOptional()
     }
 }
 
