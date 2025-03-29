@@ -15,7 +15,7 @@ Wait... You're telling me I can't just place a torch in my wooden house without 
 [[dependencies.ignition]]
 modId="minecraft"
 type="REQUIRED"
-versionRange="[1.21,1.22)"
+versionRange="[1.21.4,1.22)"
 ordering="NONE"
 side="BOTH"
 [[mixins]]

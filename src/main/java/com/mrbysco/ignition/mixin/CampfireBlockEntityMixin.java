@@ -3,7 +3,11 @@ package com.mrbysco.ignition.mixin;
 import com.mrbysco.ignition.config.IgnitionConfig;
 import com.mrbysco.ignition.util.FlammabilityUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.crafting.CampfireCookingRecipe;
+import net.minecraft.world.item.crafting.RecipeManager.CachedCheck;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.CampfireBlockEntity;
@@ -18,9 +22,9 @@ import java.util.function.IntSupplier;
 
 @Mixin(CampfireBlockEntity.class)
 public class CampfireBlockEntityMixin {
-	@Inject(method = "cookTick(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/entity/CampfireBlockEntity;)V",
+	@Inject(method = "cookTick(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/entity/CampfireBlockEntity;Lnet/minecraft/world/item/crafting/RecipeManager$CachedCheck;)V",
 			at = @At(value = "HEAD"))
-	private static void ignitionCampfireTick(Level level, BlockPos pos, BlockState state, CampfireBlockEntity blockEntity, CallbackInfo ci) {
+	private static void ignitionCampfireTick(ServerLevel level, BlockPos pos, BlockState state, CampfireBlockEntity campfire, CachedCheck<SingleRecipeInput, CampfireCookingRecipe> check, CallbackInfo ci) {
 		if (IgnitionConfig.COMMON.enableCampfire.get() && state.is(Blocks.CAMPFIRE)) {
 			if (level.getGameTime() % ignition$getCampfireTickDelay(level.random, IgnitionConfig.COMMON.campfireTickDelay::get) == 0) {
 				FlammabilityUtil.onFireTick(state, level, pos, level.random, Blocks.FIRE.defaultBlockState());

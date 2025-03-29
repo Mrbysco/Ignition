@@ -2,6 +2,7 @@ package com.mrbysco.ignition.util;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
@@ -21,13 +22,13 @@ public class FlammabilityUtil {
 
 	@SuppressWarnings("deprecation")
 	public static boolean isFlammable(LevelReader reader, BlockPos pos, Direction face) {
-		return (pos.getY() < reader.getMinBuildHeight() || pos.getY() >= reader.getMaxBuildHeight() ||
-				reader.hasChunkAt(pos)) && reader.getBlockState(pos).isFlammable(reader, pos, face);
+		return (reader.isInsideBuildHeight(pos.getY()) || reader.hasChunkAt(pos)) &&
+				reader.getBlockState(pos).isFlammable(reader, pos, face);
 	}
 
 	@SuppressWarnings("deprecation")
 	public static void onFireTick(BlockState state, Level level, BlockPos pos, RandomSource random, BlockState fireState) {
-		if (level.getGameRules().getBoolean(GameRules.RULE_DOFIRETICK)) {
+		if (level instanceof ServerLevel serverLevel && serverLevel.getGameRules().getBoolean(GameRules.RULE_DOFIRETICK)) {
 			int i = random.nextInt(3);
 			if (i > 0) {
 				BlockPos blockpos = pos;
