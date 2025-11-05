@@ -1,0 +1,16 @@
+{
+  "ignition.configuration.enableTorch": "Enable Torch",
+  "ignition.configuration.enableSoulCampfire": "Enable Soul Campfire",
+  "ignition.configuration.enableCandles": "Enable Candles",
+  "ignition.configuration.soulCampfireTickDelay": "Soul Campfire Tick Delay",
+  "ignition.configuration.soulTorchTickDelay": "Soul Torch Tick Delay",
+  "ignition.configuration.randomCandleTicking": "Random Candle Ticking",
+  "ignition.configuration.General": "General",
+  "ignition.configuration.torchTickDelay": "Torch Tick Delay",
+  "ignition.configuration.candleTickDelay": "Candle Tick Delay",
+  "ignition.configuration.randomTicking": "Random Ticking",
+  "ignition.configuration.enableCampfire": "Enable Campfire",
+  "ignition.configuration.enableSoulTorch": "Enable Soul Torch",
+  "ignition.configuration.randomSoulTicking": "Random Soul Ticking",
+  "ignition.configuration.campfireTickDelay": "Campfire Tick Delay"
+}
