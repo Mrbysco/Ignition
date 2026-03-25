@@ -26,12 +26,12 @@ public class CampfireBlockEntityMixin {
 			at = @At(value = "HEAD"))
 	private static void ignitionCampfireTick(ServerLevel level, BlockPos pos, BlockState state, CampfireBlockEntity campfire, CachedCheck<SingleRecipeInput, CampfireCookingRecipe> check, CallbackInfo ci) {
 		if (IgnitionConfig.COMMON.enableCampfire.get() && state.is(Blocks.CAMPFIRE)) {
-			if (level.getGameTime() % ignition$getCampfireTickDelay(level.random, IgnitionConfig.COMMON.campfireTickDelay::get) == 0) {
-				FlammabilityUtil.onFireTick(state, level, pos, level.random, Blocks.FIRE.defaultBlockState());
+			if (level.getGameTime() % ignition$getCampfireTickDelay(level.getRandom(), IgnitionConfig.COMMON.campfireTickDelay::get) == 0) {
+				FlammabilityUtil.onFireTick(state, level, pos, level.getRandom(), Blocks.FIRE.defaultBlockState());
 			}
 		} else if (IgnitionConfig.COMMON.enableSoulCampfire.get() && state.is(Blocks.SOUL_CAMPFIRE)) {
-			if (level.getGameTime() % ignition$getCampfireTickDelay(level.random, IgnitionConfig.COMMON.soulCampfireTickDelay::get) == 0) {
-				FlammabilityUtil.onFireTick(state, level, pos, level.random, Blocks.SOUL_FIRE.defaultBlockState());
+			if (level.getGameTime() % ignition$getCampfireTickDelay(level.getRandom(), IgnitionConfig.COMMON.soulCampfireTickDelay::get) == 0) {
+				FlammabilityUtil.onFireTick(state, level, pos, level.getRandom(), Blocks.SOUL_FIRE.defaultBlockState());
 			}
 		}
 	}

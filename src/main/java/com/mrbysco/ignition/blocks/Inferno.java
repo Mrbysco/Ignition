@@ -23,7 +23,7 @@ public interface Inferno {
 
 	default void ignition$scheduleFireTick(Level level, BlockPos pos, BlockState state) {
 		if (!IgnitionConfig.COMMON.randomTicking.get()) {
-			level.scheduleTick(pos, state.getBlock(), ignition$getFireTickDelay(state, level.random));
+			level.scheduleTick(pos, state.getBlock(), ignition$getFireTickDelay(state, level.getRandom()));
 		}
 	}
 }
