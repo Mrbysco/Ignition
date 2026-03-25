@@ -4,10 +4,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gamerules.GameRules;
 
 public class FlammabilityUtil {
 	public static boolean hasFlammableNeighbours(LevelReader reader, BlockPos pos) {
@@ -28,7 +28,7 @@ public class FlammabilityUtil {
 
 	@SuppressWarnings("deprecation")
 	public static void onFireTick(BlockState state, Level level, BlockPos pos, RandomSource random, BlockState fireState) {
-		if (level instanceof ServerLevel serverLevel && serverLevel.getGameRules().getBoolean(GameRules.RULE_DOFIRETICK)) {
+		if (level instanceof ServerLevel serverLevel && serverLevel.getGameRules().get(GameRules.FIRE_SPREAD_RADIUS_AROUND_PLAYER) != 0) {
 			int i = random.nextInt(3);
 			if (i > 0) {
 				BlockPos blockpos = pos;
